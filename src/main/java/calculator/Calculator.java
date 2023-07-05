@@ -6,8 +6,7 @@ public abstract class Calculator {
         return 0;
     }
 
-    public double calculate(double d1, char operator, double d2) {
-
+    protected double calculate(double d1, char operator, double d2) {
         switch (operator) {
             case '+' -> { return d1 + d2; }
             case '-' -> { return d1 - d2; }
@@ -15,6 +14,10 @@ public abstract class Calculator {
             case '/' -> { return d1 / d2; }
             default -> { return 0; }
         }
+    }
+
+    protected String trimInput(String input) {
+        return input.replace(" ","");
     }
 
 }

@@ -12,7 +12,7 @@ public class SamePrecedenceCalculator extends Calculator {
 
     @Override
     public double evaluate(String input) throws ExpressionException, NoOperatorException, WrongNumberException {
-        String trimmedInput = input.replace(" ", "");
+        String trimmedInput = trimInput(input);
 
         if (CalculatorUtil.isOperator(trimmedInput.charAt(0)) || CalculatorUtil.isOperator(trimmedInput.charAt(trimmedInput.length()-1))) {
             throw new ExpressionException(Constants.WRONG_INPUT);

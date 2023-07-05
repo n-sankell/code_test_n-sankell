@@ -10,7 +10,7 @@ public class OneOperatorCalculator extends Calculator {
 
     @Override
     public double evaluate(String input) throws Exception {
-        String trimmedInput = input.replace(" ", "");
+        String trimmedInput = trimInput(input);
 
         if (CalculatorUtil.countOperators(trimmedInput) == 0) {
             throw new NoOperatorException(Constants.NO_OPERATORS);
@@ -27,8 +27,8 @@ public class OneOperatorCalculator extends Calculator {
     }
 
     public double[] getOperands(String input, char operator) throws TooFewOperandsException, NumberFormatException, ExpressionException {
-        String delimiter = operator == '+' ? "\\+" : operator == '*' ? "\\*" : String.valueOf(operator);
-        String[] splitArray = input.split(delimiter);
+        String pattern = operator == '+' ? "\\+" : operator == '*' ? "\\*" : String.valueOf(operator);
+        String[] splitArray = input.split(pattern);
 
         if (CalculatorUtil.isOperator(input.charAt(0))) {
             throw new ExpressionException(Constants.WRONG_INPUT);
