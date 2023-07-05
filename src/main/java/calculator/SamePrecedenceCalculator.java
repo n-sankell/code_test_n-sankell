@@ -67,4 +67,55 @@ public class SamePrecedenceCalculator extends Calculator {
         return doubles;
     }
 
+
+    public String modifyString(String input) {
+        return calcRec(-1,input.toCharArray(), "", "", "");
+    }
+
+    private String calcRec(int index, char[] input, String modified, String currentNumber, String lastNumber) {
+        index++;
+        if (index == input.length) {
+            return modified;
+        }
+
+        if (input[index] == '-' || input[index] == '+') {
+            lastNumber = currentNumber + input[index];
+            return calcRec(index, input, modified + input[index], "", lastNumber);
+        } else if (input[index] == '*' || input[index] == '/') {
+            lastNumber = currentNumber;
+            index = getNextIndex(index, input);
+            return calcRec(index, input, modified + lastNumber, "", lastNumber);
+        } else {
+            currentNumber += input[index];
+        }
+
+        System.out.println(input[index]);
+        System.out.println("current number " + currentNumber);
+        System.out.println("last number " + lastNumber);
+
+        return calcRec(index, input, modified + input[index], currentNumber, lastNumber);
+    }
+
+    private int getNextIndex(int index, char[] input) {
+        index++;
+        if (index == input.length) {
+            return index;
+        }
+        if (CalculatorUtil.isOperator(input[index])) {
+            return index;
+        }
+        return getNextIndex(index, input);
+    }
+
+    private String getNextNumber(int index, char[] input, String nextNumber) {
+        index++;
+        if (index == input.length) {
+            return nextNumber;
+        }
+        if (CalculatorUtil.isOperator(input[index])) {
+            return nextNumber;
+        }
+        return getNextNumber(index, input, nextNumber + input[index]);
+    }
+
 }
