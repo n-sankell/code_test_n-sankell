@@ -46,6 +46,11 @@ public class Problem5Test {
     }
 
     @Test
+    public void calculate8() throws Exception {
+        assert calculator.evaluate("5*2*2 +1 -4 / 2 +1") == 20;
+    }
+
+    @Test
     public void catchNoOpException() throws Exception {
         try {
             calculator.evaluate("aaa");

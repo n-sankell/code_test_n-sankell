@@ -3,9 +3,7 @@ package calculator;
 import calculator.constants.Constants;
 import calculator.exception.NoOperatorException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class DifferentPrecedenceCalculator extends SamePrecedenceCalculator {
 
@@ -19,42 +17,31 @@ public class DifferentPrecedenceCalculator extends SamePrecedenceCalculator {
 
     @Override
     protected double getResult(Queue<Double> operands, Queue<Character> operators) {
+        List<Double> doubles = new LinkedList<>(operands);
+        List<Character> chars = new LinkedList<>(operators);
 
-        List<Double> doubles = new ArrayList<>(operands);
-        List<Double> newDoubles = new ArrayList<>(doubles);
-        List<Character> chars = new ArrayList<>(operators);
-        List<Character> newChars = new ArrayList<>(chars);
-        List<Integer> indexes = new ArrayList<>();
+        while (chars.contains('*') || chars.contains('/')) {
+            int index = -1;
+            for (int i = 0; i < chars.size(); i++) {
+                if (chars.get(i) == '*' || chars.get(i) == '/') {
+                    index = i;
+                    break;
+                }
+            }
+            if (index >= 0) {
+                double result = calculate(doubles.get(index), chars.get(index), doubles.get(index + 1));
+                doubles.set(index, result);
+                doubles.remove(index + 1);
+                chars.remove(index);
+            }
+        }
 
+        double result = doubles.get(0);
         for (int i = 0; i < chars.size(); i++) {
-            if (chars.get(i) == '*' || chars.get(i) == '/') {
-                indexes.add(i);
-            }
-        }
-        double tempResult = doubles.get(indexes.get(0));
-        int last = indexes.get(0);
-        for (Integer i : indexes) {
-            if (i == last+1) {
-                tempResult = calculate(tempResult, chars.get(i), doubles.get(i+1));
-                newDoubles.set(i, tempResult);
-            } else {
-                tempResult = calculate(newDoubles.get(i), chars.get(i), doubles.get(i+1));
-                newDoubles.set(i, tempResult);
-                tempResult = newDoubles.get(i);
-            }
-            newChars.remove(chars.get(i));
-            last = i;
-        }
-        for (int i = indexes.size()-1; i >= 0 ; i--) {
-            newDoubles.remove(indexes.get(i)+1);
+            result = calculate(result, chars.get(i), doubles.get(i + 1));
         }
 
-        double result = newDoubles.get(0);
-        for (int i = 0; i < newChars.size(); i++) {
-            result = calculate(result, newChars.get(i), newDoubles.get(i+1));
-        }
-
-        return newChars.size() > 0 ? result : tempResult;
+        return result;
     }
 
 }
