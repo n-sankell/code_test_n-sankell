@@ -6,8 +6,7 @@ import calculator.exception.NoOperatorException;
 import calculator.exception.WrongNumberException;
 import calculator.util.CalculatorUtil;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class SamePrecedenceCalculator extends Calculator {
 

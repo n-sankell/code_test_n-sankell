@@ -15,10 +15,6 @@ public class CalculatorUtil {
         return operator;
     }
 
-    public static boolean hasOneOperator(String input) {
-        return countOperators(input) == 1;
-    }
-
     public static int countOperators(String input) {
         char[] chars = input.toCharArray();
         int counter = 0;
@@ -68,30 +64,6 @@ public class CalculatorUtil {
 
     public static int getOperatorGroup(char operator) {
         return operator == '+' || operator == '-' ? 1 : 2;
-    }
-
-    private static boolean hasDigit(String input) {
-        for (char c : input.toCharArray()) {
-            if (Character.isDigit(c)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean hasAnyOperator(String input) {
-        for (char c : input.toCharArray()) {
-            if (c == '+' || c == '-' || c == '*' || c == '/') {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected static boolean checkOperators(String input) {
-        String[] array = input.split("[+-]");
-        Arrays.stream(array).forEach(System.out::println);
-        return true;
     }
 
     public static boolean isOperator(char c) {
