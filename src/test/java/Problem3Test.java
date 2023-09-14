@@ -1,8 +1,9 @@
+import calculator.OneOperatorCalculator;
 import calculator.exception.*;
 import calculator.util.CalculatorUtil;
-import calculator.OneOperatorCalculator;
-import calculator.constants.Constants;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class Problem3Test {
 
@@ -10,73 +11,52 @@ public class Problem3Test {
 
     @Test
     public void calculateAdd() throws Exception {
-        assert calculator.evaluate("2+30") == 32;
+        assertEquals(2 + 30, calculator.evaluate("2+30"), 0);
     }
 
     @Test
-    public void calculateMultiply() throws Exception {
-        assert calculator.evaluate("2 * 3") == 6;
+    public void calculateMultiply() {
+        assertEquals(2 * 3, calculator.evaluate("2 * 3"), 0);
     }
 
     @Test
-    public void calculateSubtract() throws Exception {
-        assert calculator.evaluate("2 -3") == -1;
+    public void calculateSubtract() {
+        assertEquals(2 - 3, calculator.evaluate("2 -3"), 0);
     }
 
     @Test
-    public void calculateDivide() throws Exception {
-        assert calculator.evaluate("2     / 3") == 0.6666666666666666;
+    public void calculateDivide() {
+        assertEquals(2.0 / 3, calculator.evaluate("2     / 3"), 0);
     }
 
     @Test
     public void findOperator() {
-        String input = "1-1";
-        assert CalculatorUtil.findSingleOperator(input) == '-';
+        assertEquals('-', CalculatorUtil.findSingleOperator("1-1"));
     }
 
-    @Test
-    public void catchNoOpException() throws Exception {
-        try {
-            calculator.evaluate("aaa");
-        } catch (NoOperatorException e) {
-            assert e.getMessage().equals(Constants.NO_OPERATORS);
-        }
+    @Test(expected = NoOperatorException.class)
+    public void catchNoOpException() throws RuntimeException {
+        calculator.evaluate("aaa");
     }
 
-    @Test
-    public void catchTooManyOpException() throws Exception {
-        try {
-            calculator.evaluate("-*+");
-        } catch (TooManyOperatorsException e) {
-            assert e.getMessage().equals(Constants.TOO_MANY_OPERATORS);
-        }
+    @Test(expected = TooManyOperatorsException.class)
+    public void catchTooManyOpException() {
+        calculator.evaluate("-*+");
     }
 
-    @Test
-    public void catchTooFewOpException() throws Exception {
-        try {
-            calculator.evaluate("4524*");
-        } catch (TooFewOperandsException e) {
-            assert e.getMessage().equals(Constants.TOO_FEW_OPERANDS);
-        }
+    @Test(expected = TooFewOperandsException.class)
+    public void catchTooFewOpException() {
+        calculator.evaluate("4524*");
     }
 
-    @Test
-    public void catchExpressionException() throws Exception {
-        try {
-            calculator.evaluate(" -4524");
-        } catch (ExpressionException e) {
-            assert e.getMessage().equals(Constants.WRONG_INPUT);
-        }
+    @Test(expected = ExpressionException.class)
+    public void catchExpressionException() {
+        calculator.evaluate(" -4524");
     }
 
-    @Test
-    public void catchParseException() throws Exception {
-        try {
-            calculator.evaluate("56 + hoppsan");
-        } catch (WrongNumberException e) {
-            assert e.getMessage().equals(Constants.COULD_NOT_PARSE_DOUBLE);
-        }
+    @Test(expected = WrongNumberException.class)
+    public void catchParseException() {
+        calculator.evaluate("56 + hoppsan");
     }
 
 }

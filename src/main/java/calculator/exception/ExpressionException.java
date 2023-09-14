@@ -1,6 +1,6 @@
 package calculator.exception;
 
-public class ExpressionException extends Exception {
+public class ExpressionException extends RuntimeException {
 
     private final String message;
 

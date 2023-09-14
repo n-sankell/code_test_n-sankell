@@ -1,6 +1,6 @@
 package calculator.exception;
 
-public class UnknownException extends Exception {
+public class UnknownException extends RuntimeException {
 
     private final String message;
 

@@ -1,6 +1,6 @@
 package calculator.exception;
 
-public class TooManyOperatorsException extends Exception {
+public class TooManyOperatorsException extends RuntimeException {
 
     private final String message;
 

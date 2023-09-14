@@ -2,6 +2,9 @@ import org.junit.Test;
 import webdriver.WebConstants;
 import webdriver.WebDriver;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 public class Problem2Test {
 
@@ -9,12 +12,12 @@ public class Problem2Test {
 
     @Test
     public void testWebDriver1() {
-        assert webDriver.findAllLinks(WebConstants.GOOGLE_ADDRESS).size() > 0;
+        assertFalse(webDriver.findAllLinks(WebConstants.GOOGLE_ADDRESS).isEmpty());
     }
 
     @Test
     public void testWebDriver2() {
-        assert webDriver.findAllLinks(WebConstants.VECKA_ADDRESS).size() == 0;
+        assertTrue(webDriver.findAllLinks(WebConstants.VECKA_ADDRESS).isEmpty());
     }
 
 }

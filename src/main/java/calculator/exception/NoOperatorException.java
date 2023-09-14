@@ -1,6 +1,6 @@
 package calculator.exception;
 
-public class NoOperatorException extends Exception {
+public class NoOperatorException extends RuntimeException {
 
     private final String message;
 

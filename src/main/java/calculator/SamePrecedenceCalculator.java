@@ -12,7 +12,7 @@ public class SamePrecedenceCalculator extends Calculator {
 
     @Override
     public double evaluate(String input) throws ExpressionException, NoOperatorException, WrongNumberException {
-        String trimmedInput = trimInput(input);
+        String trimmedInput = removeWhitespaces(input);
 
         if (CalculatorUtil.isOperator(trimmedInput.charAt(0)) || CalculatorUtil.isOperator(trimmedInput.charAt(trimmedInput.length()-1))) {
             throw new ExpressionException(Constants.WRONG_INPUT);
@@ -57,14 +57,6 @@ public class SamePrecedenceCalculator extends Calculator {
             }
         }
         return true;
-    }
-
-    private Queue<Double> parseDoubles(Queue<String> strings) throws NumberFormatException {
-        Queue<Double> doubles = new LinkedList<>();
-        while (!strings.isEmpty()) {
-            doubles.add(Double.parseDouble(strings.poll()));
-        }
-        return doubles;
     }
 
 }

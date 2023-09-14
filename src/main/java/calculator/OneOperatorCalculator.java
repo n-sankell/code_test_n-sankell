@@ -9,12 +9,10 @@ import java.util.Arrays;
 public class OneOperatorCalculator extends Calculator {
 
     @Override
-    public double evaluate(String input) throws Exception {
-        String trimmedInput = trimInput(input);
+    public double evaluate(String input) throws RuntimeException {
+        String trimmedInput = removeWhitespaces(input);
 
-        if (CalculatorUtil.countOperators(trimmedInput) == 0) {
-            throw new NoOperatorException(Constants.NO_OPERATORS);
-        } else if (CalculatorUtil.countOperators(trimmedInput) > 1) {
+        if (CalculatorUtil.countOperators(trimmedInput) > 1) {
             throw new TooManyOperatorsException(Constants.TOO_MANY_OPERATORS);
         }
         char operator = CalculatorUtil.findSingleOperator(trimmedInput);

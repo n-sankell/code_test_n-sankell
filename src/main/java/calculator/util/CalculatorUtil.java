@@ -1,18 +1,19 @@
 package calculator.util;
 
+import calculator.constants.Constants;
+import calculator.exception.NoOperatorException;
+
 import java.util.*;
 
 public class CalculatorUtil {
 
-    public static char findSingleOperator(String input) {
-        char[] chars = input.toCharArray();
-        char operator = ' ';
-        for (char c : chars) {
+    public static char findSingleOperator(String input) throws NoOperatorException {
+        for (char c : input.toCharArray()) {
             if (isOperator(c)) {
-                operator = c;
+                return c;
             }
         }
-        return operator;
+        throw new NoOperatorException(Constants.NO_OPERATORS);
     }
 
     public static int countOperators(String input) {

@@ -1,9 +1,10 @@
 import calculator.DifferentPrecedenceCalculator;
-import calculator.constants.Constants;
 import calculator.exception.ExpressionException;
 import calculator.exception.NoOperatorException;
 import calculator.exception.WrongNumberException;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class Problem5Test {
 
@@ -11,70 +12,73 @@ public class Problem5Test {
 
     @Test
     public void calculate1() throws Exception {
-        assert calculator.evaluate("2+3*40") == 122;
+        assertEquals(2+3*40, calculator.evaluate("2+3*40"), 0);
     }
 
     @Test
     public void calculate2() throws Exception {
-        assert calculator.evaluate("2 * 3 + 4") == 10;
+        assertEquals(2 * 3 + 4, calculator.evaluate("2 * 3 + 4"), 0);
     }
 
     @Test
     public void calculate3() throws Exception {
-        assert calculator.evaluate("2 / 3 + 4 - 1") == 3.666666666666667;
+        assertEquals(2.0 / 3 + 4 - 1, calculator.evaluate("2 / 3 + 4 - 1"), 0);
     }
 
     @Test
     public void calculate4() throws Exception {
-        assert calculator.evaluate("2 - 3 *4 ") == -10;
+        assertEquals(2-3*4, calculator.evaluate("2 - 3 *4 "), 0);
     }
 
     @Test
     public void calculate5() throws Exception {
-        assert calculator.evaluate("5*2+1-4/2+1") == 10;
+        assertEquals(5*2+1-4.0/2+1, calculator.evaluate("5*2+1-4/2+1"), 0);
     }
-
 
     @Test
     public void calculate6() throws Exception {
-        assert calculator.evaluate("2 * 3 * 4") == 24;
+        assertEquals(2 * 3 * 4, calculator.evaluate("2 * 3 * 4"), 0);
     }
 
     @Test
     public void calculate7() throws Exception {
-        assert calculator.evaluate("2 * 3 /  4 * 20") == 30;
+        assertEquals(2.0 * 3 / 4 * 20, calculator.evaluate("2 * 3 /  4 * 20"), 0);
     }
 
     @Test
     public void calculate8() throws Exception {
-        assert calculator.evaluate("5*2*2 +1 -4 / 2 +1") == 20;
+        assertEquals(5 * 2 * 2 + 1 - 4.0 / 2 + 1, calculator.evaluate("5*2*2 +1 -4 / 2 +1"), 0);
     }
 
     @Test
-    public void catchNoOpException() throws Exception {
-        try {
-            calculator.evaluate("aaa");
-        } catch (NoOperatorException e) {
-            assert e.getMessage().equals(Constants.NO_OPERATORS);
-        }
+    public void previousCases() throws Exception {
+        assertEquals(2 + 30, calculator.evaluate("2+30"), 0);
+        assertEquals(2 * 3, calculator.evaluate("2 * 3"), 0);
+        assertEquals(2 - 3, calculator.evaluate("2 -3"), 0);
+        assertEquals(2.0 / 3, calculator.evaluate("2     / 3"), 0);
+        assertEquals(2.0 * 3 / 4 * 20, calculator.evaluate("2 * 3 /  4 * 20"), 0);
+        assertEquals(2 * 3 * 4, calculator.evaluate("2 * 3 * 4"), 0);
+        assertEquals(2 - 3 + 4 + 15 , calculator.evaluate("2 - 3 + 4 + 15"), 0);
     }
 
-    @Test
-    public void catchExpressionException() throws Exception {
-        try {
-            calculator.evaluate(" -4524");
-        } catch (ExpressionException e) {
-            assert e.getMessage().equals(Constants.WRONG_INPUT);
-        }
+    @Test(expected = NoOperatorException.class)
+    public void catchNoOpException1() {
+        calculator.evaluate("124");
     }
 
-    @Test
-    public void catchParseException() throws Exception {
-        try {
-            calculator.evaluate("56 + hoppsan");
-        } catch (WrongNumberException e) {
-            assert e.getMessage().equals(Constants.COULD_NOT_PARSE_DOUBLE);
-        }
+    @Test(expected = NoOperatorException.class)
+    public void catchNoOpException2() {
+        calculator.evaluate("aaa");
+    }
+
+    @Test(expected = ExpressionException.class)
+    public void catchExpressionException() {
+        calculator.evaluate(" -4524");
+    }
+
+    @Test(expected = WrongNumberException.class)
+    public void catchParseException() {
+        calculator.evaluate("56 + hoppsan");
     }
 
 }

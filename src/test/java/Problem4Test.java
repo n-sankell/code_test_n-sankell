@@ -1,84 +1,71 @@
 import calculator.SamePrecedenceCalculator;
-import calculator.constants.Constants;
-import calculator.exception.*;
+import calculator.exception.ExpressionException;
+import calculator.exception.NoOperatorException;
+import calculator.exception.WrongNumberException;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class Problem4Test {
 
     private final SamePrecedenceCalculator calculator = new SamePrecedenceCalculator();
 
     @Test
-    public void calculate1() throws Exception {
-        assert calculator.evaluate("2+30+4") == 36;
+    public void calculate1() {
+        assertEquals(2 + 30 +4, calculator.evaluate("2+30+4"),0);
     }
 
     @Test
-    public void calculate2() throws Exception {
-        assert calculator.evaluate("2 - 3 + 4 + 15") == 18;
+    public void calculate2() {
+        assertEquals(2 - 3 + 4 + 15 , calculator.evaluate("2 - 3 + 4 + 15"), 0);
     }
 
     @Test
-    public void calculate3() throws Exception {
-        assert calculator.evaluate("2 * 3 * 4") == 24;
+    public void calculate3() {
+        assertEquals(2 * 3 * 4, calculator.evaluate("2 * 3 * 4"), 0);
     }
 
     @Test
-    public void calculate4() throws Exception {
-        assert calculator.evaluate("2 * 3 /  4 * 20") == 30;
+    public void calculate4() {
+        assertEquals(2.0 * 3 / 4 * 20, calculator.evaluate("2 * 3 /  4 * 20"), 0);
     }
 
     @Test
-    public void catchDifferentPrecedences1() throws Exception {
-        try {
-            calculator.evaluate("2 * 3 /  4 + 20");
-        } catch (ExpressionException e) {
-            assert e.getMessage().equals(Constants.DIFFERENT_PRECEDENCE);
-        }
+    public void previousCases() throws Exception {
+        assertEquals(2 + 30, calculator.evaluate("2+30"), 0);
+        assertEquals(2 * 3, calculator.evaluate("2 * 3"), 0);
+        assertEquals(2 - 3, calculator.evaluate("2 -3"), 0);
+        assertEquals(2.0 / 3, calculator.evaluate("2     / 3"), 0);
     }
 
-    @Test
-    public void catchDifferentPrecedences2() throws Exception {
-        try {
-            calculator.evaluate("2 * 3 /  4 - 20");
-        } catch (ExpressionException e) {
-            assert e.getMessage().equals(Constants.DIFFERENT_PRECEDENCE);
-        }
+    @Test(expected = ExpressionException.class)
+    public void catchDifferentPrecedences1() {
+        calculator.evaluate("2 * 3 /  4 + 20");
     }
 
-    @Test
-    public void catchDifferentPrecedences3() throws Exception {
-        try {
-            calculator.evaluate("2 + 3 -  4 * 20");
-        } catch (ExpressionException e) {
-            assert e.getMessage().equals(Constants.DIFFERENT_PRECEDENCE);
-        }
+    @Test(expected = ExpressionException.class)
+    public void catchDifferentPrecedences2() {
+        calculator.evaluate("2 * 3 /  4 - 20");
     }
 
-    @Test
-    public void catchNoOpException() throws Exception {
-        try {
-            calculator.evaluate("aaa");
-        } catch (NoOperatorException e) {
-            assert e.getMessage().equals(Constants.NO_OPERATORS);
-        }
+    @Test(expected = ExpressionException.class)
+    public void catchDifferentPrecedences3() {
+        calculator.evaluate("2 + 3 -  4 * 20");
     }
 
-    @Test
-    public void catchExpressionException() throws Exception {
-        try {
-            calculator.evaluate(" -4524");
-        } catch (ExpressionException e) {
-            assert e.getMessage().equals(Constants.WRONG_INPUT);
-        }
+    @Test(expected = NoOperatorException.class)
+    public void catchNoOpException() {
+        calculator.evaluate("aaa");
     }
 
-    @Test
-    public void catchParseException() throws Exception {
-        try {
-            calculator.evaluate("56 + hoppsan");
-        } catch (WrongNumberException e) {
-            assert e.getMessage().equals(Constants.COULD_NOT_PARSE_DOUBLE);
-        }
+    @Test(expected = ExpressionException.class)
+    public void catchExpressionException() {
+        calculator.evaluate(" -4524");
+    }
+
+    @Test(expected = WrongNumberException.class)
+    public void catchParseException() {
+        calculator.evaluate("56 + hoppsan");
     }
 
 }

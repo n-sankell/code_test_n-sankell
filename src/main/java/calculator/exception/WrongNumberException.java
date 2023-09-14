@@ -1,6 +1,6 @@
 package calculator.exception;
 
-public class WrongNumberException extends Exception {
+public class WrongNumberException extends RuntimeException {
 
     private final String message;
 

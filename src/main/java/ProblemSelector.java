@@ -6,7 +6,33 @@ import webdriver.WebDriver;
 
 import java.util.Scanner;
 
-public class ProblemBuilder {
+public class ProblemSelector {
+
+    public void selectProblem() {
+        System.out.println("Welcome, please select which program you want to use: \n" +
+                "1 - Anagram finder\n" +
+                "2 - Link finder\n" +
+                "3 - Calculator, one operator\n" +
+                "4 - Calculator, same precedence\n" +
+                "5 - Calculator, different precedence\n" +
+                "x - Quit");
+        Scanner scanner = new Scanner(System.in);
+        boolean loop = true;
+        while (loop) {
+            String input = scanner.nextLine();
+            switch (input.charAt(0)) {
+                case '1' -> useAnagramFinder();
+                case '2' -> printProblem2();
+                case '3' -> useCalculator(3);
+                case '4' -> useCalculator(4);
+                case '5' -> useCalculator(5);
+                case 'x' -> loop = false;
+            }
+        }
+        System.out.println("Are you sure? y/n");
+
+
+    }
 
     public void printProblem(int number) {
         switch (number) {
@@ -42,7 +68,7 @@ public class ProblemBuilder {
     private void printProblem2() {
         WebDriver driver = new WebDriver();
         System.out.println("PROBLEM 2 \n");
-        driver.printAllLinks(driver.findAllLinks(WebConstants.GOOGLE_ADDRESS));
+        driver.printAllLinks(driver.findAllLinks(WebConstants.GOOGLE_ADDRESS), WebConstants.GOOGLE_ADDRESS);
     }
 
     private void useCalculator(int number) {
